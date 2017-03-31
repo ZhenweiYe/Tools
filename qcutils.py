@@ -3,6 +3,8 @@
 
 
 import datetime as dt
+import scipy.stats
+import numpy as np
 
 
 def conv_long_to_dtm(dt_l):
@@ -39,7 +41,14 @@ def trim(docstring):
     # Return a single string:
     return '\n'.join(trimmed)
     
-    
+#caclulate mode for the series which include nan.
+def mode(series):
+    try:
+        return scipy.stats.mode(series.dropna())[0][0]
+    except IndexError:
+        # (array([], dtype=...), array([], dtype=float64))
+        return np.nan
+                                    
 def main():
     print(conv_long_to_dtm(1486456336))
 
